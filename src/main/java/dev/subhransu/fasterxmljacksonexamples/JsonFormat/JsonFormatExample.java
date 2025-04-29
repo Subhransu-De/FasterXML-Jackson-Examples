@@ -18,7 +18,7 @@ record JsonFormatExample(
 @RestController
 class JsonFormatExampleController {
   @GetMapping("/json-format")
-  public JsonFormatExample format() {
+  public JsonFormatExample getJsonFormat() {
     return new JsonFormatExample();
   }
 }
