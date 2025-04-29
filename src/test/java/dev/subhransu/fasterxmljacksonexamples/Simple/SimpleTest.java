@@ -1,4 +1,4 @@
-package dev.subhransu.fasterxmljacksonexamples.jsonproperty;
+package dev.subhransu.fasterxmljacksonexamples.Simple;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -14,16 +14,15 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class JsonPropertyExampleTest {
+class SimpleTest {
 
-  @Autowired private MockMvc mockMvc;
+  @Autowired private MockMvc mvc;
 
   @Test
   void shouldSucceed() throws Exception {
-    mockMvc
-        .perform(get("/jsonProperty"))
+    mvc.perform(get("/hello").accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.first_name").value("John Doe"));
+        .andExpect(jsonPath("$.message").value("Hello, world!"));
   }
 }

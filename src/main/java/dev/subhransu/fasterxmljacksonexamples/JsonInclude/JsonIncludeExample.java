@@ -9,7 +9,7 @@ record JsonIncludeExample(String nullField, String notNullField) {}
 
 @RestController
 class JsonIncludeExampleController {
-  @GetMapping("/jsonInclude")
+  @GetMapping("/json-include")
   public JsonIncludeExample getJsonIncludeExample() {
     return new JsonIncludeExample(null, "Not Null Field");
   }

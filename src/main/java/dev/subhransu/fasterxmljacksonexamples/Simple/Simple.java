@@ -1,4 +1,4 @@
-package dev.subhransu.fasterxmljacksonexamples.simple;
+package dev.subhransu.fasterxmljacksonexamples.Simple;
 
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
