@@ -17,7 +17,7 @@ class JsonIncludeExampleTest {
   @Autowired private MockMvc mvc;
 
   @Test
-  public void testJsonIncludeExample() throws Exception {
+  void shouldSucceed() throws Exception {
     mvc.perform(MockMvcRequestBuilders.get("/json-include"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.notNullField").value("Not Null Field"))

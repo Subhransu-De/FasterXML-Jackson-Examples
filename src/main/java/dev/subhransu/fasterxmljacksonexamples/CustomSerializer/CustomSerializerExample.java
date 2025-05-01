@@ -29,7 +29,7 @@ class CustomSerializerExampleController {
 
   @PostMapping("/json-serialize")
   public JsonSerializeExample getJsonSerialize(
-      @RequestBody JsonSerializeExample jsonSerializeExample) throws Exception {
+      @RequestBody JsonSerializeExample jsonSerializeExample) {
     return jsonSerializeExample;
   }
 }
