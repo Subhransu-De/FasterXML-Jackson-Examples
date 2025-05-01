@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class JsonSerializeExampleTest {
+class CustomSerializerExampleTest {
 
   @Autowired private MockMvc mockMvc;
 
@@ -34,4 +34,3 @@ class JsonSerializeExampleTest {
         .andExpect(jsonPath("$.greetings").value("Hello, John"));
   }
 }
-
