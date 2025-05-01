@@ -85,4 +85,5 @@ To run the tests:
 - Spring Boot
 - FasterXML Jackson
 - JUnit 5
-- Spring Test
+- MockMVC
+- AssertJ
