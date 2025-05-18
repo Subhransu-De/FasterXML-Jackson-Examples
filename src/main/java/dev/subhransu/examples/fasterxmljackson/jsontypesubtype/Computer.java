@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 interface Device {}
 
+record Laptop(String battery) implements Device {}
+
+record Desktop(String monitor) implements Device {}
+
 record Computer<T extends Device>(
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
@@ -18,10 +22,6 @@ record Computer<T extends Device>(
           @JsonSubTypes.Type(value = Desktop.class, name = "Desktop")
         })
         T device) {}
-
-record Laptop(String battery) implements Device {}
-
-record Desktop(String monitor) implements Device {}
 
 @RestController
 class JsonTypeSubTypeExampleController {
