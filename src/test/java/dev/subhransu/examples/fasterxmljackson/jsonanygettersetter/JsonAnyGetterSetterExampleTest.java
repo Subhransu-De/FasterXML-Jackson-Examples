@@ -4,39 +4,39 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.json.JsonMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class JsonAnyGetterSetterExampleTest {
 
   @Autowired private MockMvc mockMvc;
-  @Autowired private ObjectMapper objectMapper;
+  @Autowired private JsonMapper jsonMapper;
 
   @Test
   void testAnyGetterSetter() throws Exception {
     JsonAnyGetterSetterExample input =
         new JsonAnyGetterSetterExample(
             "John Doe",
-            objectMapper.readValue(
+            jsonMapper.readValue(
                 """
-                            {
-                              "age": 30,
-                              "city": "New York",
-                              "address": {
-                                "street": "123 Main St",
-                                "zip": "10001"
-                              }
-                            }
-                        """,
-                objectMapper
+                {
+                  "age": 30,
+                  "city": "New York",
+                  "address": {
+                    "street": "123 Main St",
+                    "zip": "10001"
+                  }
+                }
+                """,
+                jsonMapper
                     .getTypeFactory()
                     .constructMapType(Map.class, String.class, Object.class)));
 
@@ -44,12 +44,13 @@ class JsonAnyGetterSetterExampleTest {
         .perform(
             post("/json-any-getter-setter")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(input)))
+                .content(jsonMapper.writeValueAsString(input)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.name").value("John Doe"))
         .andExpect(jsonPath("$.age").value(30))
         .andExpect(jsonPath("$.city").value("New York"))
         .andExpect(jsonPath("$.address.street").value("123 Main St"))
-        .andExpect(jsonPath("$.address.zip").value("10001"));
+        .andExpect(jsonPath("$.address.zip").value("10001"))
+        .andExpect(jsonPath("$.properties").doesNotExist());
   }
 }
