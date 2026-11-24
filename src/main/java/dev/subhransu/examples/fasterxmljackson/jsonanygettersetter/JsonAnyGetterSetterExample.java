@@ -7,17 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-record JsonAnyGetterSetterExample(String name, Map<String, Object> properties) {
-  @JsonAnyGetter
-  public Map<String, Object> getProperties() {
-    return properties;
-  }
-
-  @JsonAnySetter
-  public void setProperty(String name, Object value) {
-    properties.put(name, value);
-  }
-}
+record JsonAnyGetterSetterExample(
+    String name, @JsonAnyGetter @JsonAnySetter Map<String, Object> properties) {}
 
 @RestController
 class JsonAnyGetterSetterController {

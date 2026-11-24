@@ -4,24 +4,23 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.json.JsonMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class ComputerTest {
 
   @Autowired private MockMvc mockMvc;
-
-  @Autowired private ObjectMapper objectMapper;
+  @Autowired private JsonMapper jsonMapper;
 
   private static Stream<Arguments> deviceProvider() {
     return Stream.of(
@@ -34,11 +33,12 @@ class ComputerTest {
   void shouldSucceed(String type, Device device, String expectedResponse) throws Exception {
     String requestBody =
         """
-            {
-                "type": "%s",
-                "device": %s
-            }"""
-            .formatted(type, objectMapper.writeValueAsString(device));
+        {
+          "type": "%s",
+          "device": %s
+        }
+        """
+            .formatted(type, jsonMapper.writeValueAsString(device));
 
     mockMvc
         .perform(post("/json-type").contentType(MediaType.APPLICATION_JSON).content(requestBody))
